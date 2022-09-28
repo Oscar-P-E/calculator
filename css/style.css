@@ -1,2 +1,19 @@
 html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* 10pt, for easy rem sizing */
+}
+
+.container {
+  margin: auto;
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.calculator {
+  font-size: 4.8rem;
+  border: 1px solid red;
+  width: 400px;
+  height: 600px;
+  display: grid;
 }
