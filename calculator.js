@@ -119,6 +119,13 @@ function divide() {
   return a / b;
 }
 
+function clear() {
+  a = 0;
+  b = 0;
+  // To-do: display shows "0"
+  changeRegister("clear");
+}
+
 function divZero() {
   clear();
   // To-do: Display "U R DRUNK"
