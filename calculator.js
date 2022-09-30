@@ -44,6 +44,9 @@ numberButtons.forEach((btn) => {
 });
 
 function hitDigit(e) {
+  if (typeof a !== "string") {
+    a = "";
+  }
   storeDigit(e.target.textContent);
 }
 
@@ -144,11 +147,12 @@ function evaluate() {
     default:
       break;
   }
+  b = "";
   updateDisplay("evaluate");
 }
 
 function add() {
-  a += b;
+  a = Number(a) + Number(b);
   return a;
 }
 
