@@ -45,9 +45,11 @@ function hitDigit(e) {
 function storeDigit(digit) {
   if (register === "aRegister") {
     a += "" + digit;
+    updateDisplay("hitDigit");
     return;
   }
   b += "" + digit;
+  updateDisplay("hitDigit");
 }
 
 operatorButtons.forEach((btn) => {
@@ -97,6 +99,14 @@ function updateDisplay(context) {
       display.textContent = a;
       break;
 
+    case "clear":
+      display.textContent = "0";
+      break;
+
+    case "divZero":
+      display.textContent = "U R DRUNK";
+      break;
+
     default:
       break;
   }
@@ -129,6 +139,7 @@ function evaluate() {
     default:
       break;
   }
+  updateDisplay("evaluate");
 }
 
 function add() {
@@ -159,12 +170,13 @@ function clear() {
   a = "";
   b = "";
   operator = "";
-  // To-do: display shows "0"
+  updateDisplay("clear");
   changeRegister("clear");
 }
 
 function divZero() {
   clear();
+  updateDisplay("divZero");
   // To-do: Display "U R DRUNK"
 }
 
