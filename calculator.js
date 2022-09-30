@@ -26,14 +26,17 @@
 // assign 110 to a variable ("a"?)
 
 const numberButtons = document.querySelectorAll(".button .number");
-numberButtons.forEach((btn) => {
-  btn.addEventListener("click", hitDigit);
-});
+const operatorButtons = document.querySelectorAll(".button .operator");
+const display = document.querySelector(".display");
 
 let a = "";
 let b = "";
 let operator = "";
 let register = "aRegister";
+
+numberButtons.forEach((btn) => {
+  btn.addEventListener("click", hitDigit);
+});
 
 function hitDigit(e) {
   storeDigit(e.target.id);
@@ -47,13 +50,13 @@ function storeDigit(digit) {
   b += "" + digit;
 }
 
-const operatorButtons = document.querySelectorAll(".button .operator");
 operatorButtons.forEach((btn) => {
   btn.addEventListener("click", hitOperator);
 });
 
 function hitOperator(e) {
-  // If we have an operator and a 'b' number, hitting an operator evaluates
+  // We want to evaluate the expression from left to right as we go,
+  // "1 + 1 / 2 =" should give us "1" not "1.5"
   if (operator && b) {
     evaluate();
   }
@@ -73,6 +76,25 @@ function changeRegister(event) {
     case "equals":
     case "clear":
       register = "aRegister";
+      break;
+
+    default:
+      break;
+  }
+}
+
+function updateDisplay(context) {
+  switch (context) {
+    case "hitDigit":
+      if (register === "aRegister") {
+        display.textContent = a;
+        return;
+      }
+      display.textContent = b;
+      break;
+
+    case "evaluate":
+      display.textContent = a;
       break;
 
     default:
@@ -134,8 +156,9 @@ function divide() {
 }
 
 function clear() {
-  a = 0;
-  b = 0;
+  a = "";
+  b = "";
+  operator = "";
   // To-do: display shows "0"
   changeRegister("clear");
 }
