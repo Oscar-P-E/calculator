@@ -44,8 +44,9 @@ numberButtons.forEach((btn) => {
 });
 
 function hitDigit(e) {
-  if (typeof a !== "string") {
+  if (replaceMode) {
     a = "";
+    replaceMode = false;
   }
   storeDigit(e.target.textContent);
 }
@@ -65,6 +66,7 @@ operatorButtons.forEach((btn) => {
 });
 
 function hitOperator(e) {
+  replaceMode = false;
   // We want to evaluate the expression from left to right as we go,
   // "1 + 1 / 2 =" should give us "1" not "1.5"
   if (operator && b) {
@@ -118,15 +120,16 @@ function updateDisplay(context) {
     default:
       break;
   }
+  console.log(a, b, operator, register, replaceMode);
 }
 
 function evaluate() {
   if (!a) {
     a = 0;
   }
-  if (!b) {
-    b = a;
-  }
+  // if (!b) {
+  // b = a;
+  // }
   switch (operator) {
     case "add":
       add();
@@ -189,7 +192,12 @@ function divZero() {
   // To-do: Display "U R DRUNK"
 }
 
+let replaceMode = false;
 function equals() {
+  if (!operator) {
+    return;
+  }
   evaluate();
   changeRegister("equals");
+  replaceMode = true;
 }
