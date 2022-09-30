@@ -126,19 +126,19 @@ function evaluate() {
   }
   switch (operator) {
     case "add":
-      add(a, b);
+      add();
       break;
 
     case "subtract":
-      subtract(a, b);
+      subtract();
       break;
 
     case "multiply":
-      multiply(a, b);
+      multiply();
       break;
 
     case "divide":
-      divide(a, b);
+      divide();
       break;
 
     default:
