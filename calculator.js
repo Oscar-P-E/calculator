@@ -110,15 +110,18 @@ function evaluate() {
 }
 
 function add() {
-  return a + b;
+  a += b;
+  return a;
 }
 
 function subtract() {
-  return a - b;
+  a -= b;
+  return a;
 }
 
 function multiply() {
-  return a * b;
+  a *= b;
+  return a;
 }
 
 function divide() {
@@ -126,7 +129,8 @@ function divide() {
     divZero();
     return;
   }
-  return a / b;
+  a /= b;
+  return a;
 }
 
 function clear() {
