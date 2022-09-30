@@ -76,7 +76,7 @@ function changeRegister(event) {
   }
 }
 
-function evaluate(a, b, operator) {
+function evaluate() {
   switch (operator) {
     case "add":
       add(a, b);
@@ -99,19 +99,19 @@ function evaluate(a, b, operator) {
   }
 }
 
-function add(a, b) {
+function add() {
   return a + b;
 }
 
-function subtract(a, b) {
+function subtract() {
   return a - b;
 }
 
-function multiply(a, b) {
+function multiply() {
   return a * b;
 }
 
-function divide(a, b) {
+function divide() {
   if (a === 0 || b === 0) {
     divZero();
     return;
