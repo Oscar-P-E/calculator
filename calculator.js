@@ -44,7 +44,7 @@ numberButtons.forEach((btn) => {
 });
 
 function hitDigit(e) {
-  storeDigit(e.target.id);
+  storeDigit(e.target.textContent);
 }
 
 function storeDigit(digit) {
