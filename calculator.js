@@ -27,12 +27,17 @@
 
 const numberButtons = document.querySelectorAll(".button.number");
 const operatorButtons = document.querySelectorAll(".button.operator");
+const clearButton = document.querySelector("#clear");
+const equalsButton = document.querySelector("#equals");
 const display = document.querySelector(".display");
 
 let a = "";
 let b = "";
 let operator = "";
 let register = "aRegister";
+
+clearButton.addEventListener("click", clear);
+equalsButton.addEventListener("click", equals);
 
 numberButtons.forEach((btn) => {
   btn.addEventListener("click", hitDigit);
