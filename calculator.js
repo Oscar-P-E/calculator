@@ -53,6 +53,10 @@ operatorButtons.forEach((btn) => {
 });
 
 function hitOperator(e) {
+  // If we have an operator and a 'b' number, hitting an operator evaluates
+  if (operator && b) {
+    evaluate();
+  }
   setOperator(e.target.id);
 }
 
@@ -77,6 +81,12 @@ function changeRegister(event) {
 }
 
 function evaluate() {
+  if (!a) {
+    a = 0;
+  }
+  if (!b) {
+    b = a;
+  }
   switch (operator) {
     case "add":
       add(a, b);
