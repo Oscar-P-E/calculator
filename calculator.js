@@ -25,8 +25,8 @@
 // evaluate 55 * 2 (110)
 // assign 110 to a variable ("a"?)
 
-const numberButtons = document.querySelectorAll(".button .number");
-const operatorButtons = document.querySelectorAll(".button .operator");
+const numberButtons = document.querySelectorAll(".button.number");
+const operatorButtons = document.querySelectorAll(".button.operator");
 const display = document.querySelector(".display");
 
 let a = "";
