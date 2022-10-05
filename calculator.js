@@ -1,30 +1,3 @@
-// user clicks a number (5)
-// "5" gets assigned to "a", or "b" if "a" already used
-
-// user clicks a number (6)
-// "6" gets concatenated to "a" if 5 was just assigned to "a", or "b" if 5 was just assigned to "b"
-
-// user clicks an operator (+)
-// "plus" gets assigned to "operator" variable
-
-// user clicks minus
-// "minus" gets reassigned to "operator"
-
-// user clicks a number (1)
-// "1" gets assigned to "b"
-
-// user clicks an operator (*)
-// evaluate 56 - 1 (55)
-// assign 55 to a variable ("a"?)
-// "operator" reassigned "multiply"
-
-// user clicks a number (2)
-// "b" = "2"
-
-// user clicks "="
-// evaluate 55 * 2 (110)
-// assign 110 to a variable ("a"?)
-
 const numberButtons = document.querySelectorAll(".button.number");
 const operatorButtons = document.querySelectorAll(".button.operator");
 const clearButton = document.querySelector("#clear");
