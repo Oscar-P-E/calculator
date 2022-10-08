@@ -55,7 +55,7 @@ function removeActuate(e) {
 
 document.addEventListener("click", updateHighlight);
 
-function updateHighlight(e) {
+function updateHighlight() {
   if (operator === "add" && register === "bRegister") {
     addBtn.classList.add("highlight");
   } else {
