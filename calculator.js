@@ -4,6 +4,10 @@ const operatorButtons = document.querySelectorAll(".button.operator");
 const clearButton = document.querySelector("#clear");
 const equalsButton = document.querySelector("#equals");
 const display = document.querySelector(".display");
+const addBtn = document.querySelector("#add");
+const subtractBtn = document.querySelector("#subtract");
+const multiplyBtn = document.querySelector("#multiply");
+const divideBtn = document.querySelector("#divide");
 
 let a = "";
 let b = "";
@@ -18,7 +22,6 @@ numberButtons.forEach((btn) => {
 });
 
 function hitDigit(e) {
-  // e.target.classList.add("actuate");
   if (replaceMode) {
     a = "";
     replaceMode = false;
@@ -46,17 +49,65 @@ function actuate(e) {
 }
 
 function removeActuate(e) {
-  // console.log(e.target.classList);
   if (!e.target.classList.contains("actuate")) return 0;
   this.classList.remove("actuate");
 }
+
+document.addEventListener("click", updateHighlight);
+
+function updateHighlight(e) {
+  if (operator === "add" && register === "bRegister") {
+    addBtn.classList.add("highlight");
+  } else {
+    addBtn.classList.remove("highlight");
+  }
+
+  if (operator === "subtract" && register === "bRegister") {
+    subtractBtn.classList.add("highlight");
+  } else {
+    subtractBtn.classList.remove("highlight");
+  }
+
+  if (operator === "multiply" && register === "bRegister") {
+    multiplyBtn.classList.add("highlight");
+  } else {
+    multiplyBtn.classList.remove("highlight");
+  }
+
+  if (operator === "divide" && register === "bRegister") {
+    divideBtn.classList.add("highlight");
+  } else {
+    divideBtn.classList.remove("highlight");
+  }
+}
+
+// document.addEventListener()
+
+// operatorButtons.forEach((btn) => {
+//   // btn.addEventListener("click", removeHighlight);
+//   // btn.addEventListener("click", highlight);
+//   btn.addEventListener("click", toggleHighlight);
+// });
+
+// function toggleHighlight(e) {
+//   e.target.classList.toggle("highlight");
+// }
+
+// function removeHighlight(e) {
+// if (e.target.classList.contains("highlight")) return 0;
+// e.target.classList.remove("highlight");
+// }
+
+// function highlight(e) {
+// if (e.target.classList.contains("highlight")) return 0;
+// e.target.classList.add("highlight");
+// }
 
 operatorButtons.forEach((btn) => {
   btn.addEventListener("click", hitOperator);
 });
 
 function hitOperator(e) {
-  // e.target.classList.add("actuate");
   replaceMode = false;
   // We want to evaluate the expression from left to right as we go,
   // "1 + 1 / 2 =" should give us "1" not "1.5"
@@ -118,9 +169,6 @@ function evaluate() {
   if (!a) {
     a = 0;
   }
-  // if (!b) {
-  // b = a;
-  // }
   switch (operator) {
     case "add":
       add();
