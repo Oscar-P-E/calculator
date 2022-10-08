@@ -10,6 +10,7 @@ const multiplyBtn = document.querySelector("#multiply");
 const divideBtn = document.querySelector("#divide");
 const posNegBtn = document.querySelector("#pos-neg");
 const percentBtn = document.querySelector("#percent");
+const zeroBtn = document.querySelector("#zero");
 
 let a = "";
 let b = "";
@@ -28,16 +29,25 @@ function hitDigit(e) {
     a = "";
     replaceMode = false;
   }
-  storeDigit(e.target.textContent);
+  // if (register === "aRegister" && e.target.classList.contains("zero")) return;
+  storeDigit(e);
 }
 
-function storeDigit(digit) {
+function storeDigit(e) {
   if (register === "aRegister") {
-    a += "" + digit;
+    if (e.target.classList.contains("zero")) {
+      updateDisplay("hitZeroWhenZero");
+      return;
+    }
+    a += "" + e.target.textContent;
     updateDisplay("hitDigit");
     return;
   }
-  b += "" + digit;
+  if (e.target.classList.contains("zero")) {
+    updateDisplay("hitZeroWhenZero");
+    return;
+  }
+  b += "" + e.target.textContent;
   updateDisplay("hitDigit");
 }
 
@@ -54,7 +64,7 @@ function actuate(e) {
 }
 
 function removeActuate(e) {
-  if (!e.target.classList.contains("actuate")) return 0;
+  if (!e.target.classList.contains("actuate")) return;
   this.classList.remove("actuate");
 }
 
@@ -148,10 +158,11 @@ function updateDisplay(context) {
     case "posNeg":
     case "percent":
       if (register === "aRegister") {
-        display.textContent = a;
+        if (a) display.textContent = a;
         return;
       }
-      display.textContent = b;
+      if (b) display.textContent = b;
+      else display.textContent = "0";
       break;
 
     case "evaluate":
@@ -159,6 +170,7 @@ function updateDisplay(context) {
       break;
 
     case "clear":
+    case "hitZeroWhenZero":
       display.textContent = "0";
       break;
 
@@ -277,4 +289,18 @@ function percent() {
   }
   b = b * (a / 100);
   updateDisplay("percent");
+}
+
+zeroBtn.addEventListener("click", zeroCheck);
+
+function zeroCheck() {
+  if (register === "aRegister" && a) {
+    a += "" + "0";
+    updateDisplay("hitDigit");
+    return;
+  }
+  if (b) {
+    b += "" + "0";
+  }
+  updateDisplay("hitDigit");
 }
