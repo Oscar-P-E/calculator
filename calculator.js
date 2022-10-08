@@ -9,6 +9,7 @@ const subtractBtn = document.querySelector("#subtract");
 const multiplyBtn = document.querySelector("#multiply");
 const divideBtn = document.querySelector("#divide");
 const posNegBtn = document.querySelector("#pos-neg");
+const percentBtn = document.querySelector("#percent");
 
 let a = "";
 let b = "";
@@ -41,12 +42,15 @@ function storeDigit(digit) {
 }
 
 buttons.forEach((btn) => {
+  // if (btn.classList.contains("z-span")) {
+  // return;
+  // }
   btn.addEventListener("click", actuate);
   btn.addEventListener("transitionend", removeActuate);
 });
 
 function actuate(e) {
-  e.target.classList.add("actuate");
+  if (!e.target.classList.contains("z-span")) e.target.classList.add("actuate");
 }
 
 function removeActuate(e) {
@@ -142,6 +146,7 @@ function updateDisplay(context) {
   switch (context) {
     case "hitDigit":
     case "posNeg":
+    case "percent":
       if (register === "aRegister") {
         display.textContent = a;
         return;
@@ -168,6 +173,13 @@ function updateDisplay(context) {
 }
 
 function evaluate() {
+  // if (register === "aRegister") {
+  //   a += "" + digit;
+  //   updateDisplay("hitDigit");
+  //   return;
+  // }
+  // b += "" + digit;
+  // updateDisplay("hitDigit");
   if (!a) {
     a = 0;
   }
@@ -253,4 +265,16 @@ function posNeg() {
   }
   b *= -1;
   updateDisplay("posNeg");
+}
+
+percentBtn.addEventListener("click", percent);
+
+function percent() {
+  if (register === "aRegister") {
+    a /= 100;
+    updateDisplay("percent");
+    return;
+  }
+  b = b * (a / 100);
+  updateDisplay("percent");
 }
