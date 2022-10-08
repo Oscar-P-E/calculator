@@ -1,3 +1,4 @@
+const buttons = document.querySelectorAll(".button");
 const numberButtons = document.querySelectorAll(".button.number");
 const operatorButtons = document.querySelectorAll(".button.operator");
 const clearButton = document.querySelector("#clear");
@@ -17,6 +18,7 @@ numberButtons.forEach((btn) => {
 });
 
 function hitDigit(e) {
+  // e.target.classList.add("actuate");
   if (replaceMode) {
     a = "";
     replaceMode = false;
@@ -34,11 +36,27 @@ function storeDigit(digit) {
   updateDisplay("hitDigit");
 }
 
+buttons.forEach((btn) => {
+  btn.addEventListener("click", actuate);
+  btn.addEventListener("transitionend", removeActuate);
+});
+
+function actuate(e) {
+  e.target.classList.add("actuate");
+}
+
+function removeActuate(e) {
+  // console.log(e.target.classList);
+  if (!e.target.classList.contains("actuate")) return 0;
+  this.classList.remove("actuate");
+}
+
 operatorButtons.forEach((btn) => {
   btn.addEventListener("click", hitOperator);
 });
 
 function hitOperator(e) {
+  // e.target.classList.add("actuate");
   replaceMode = false;
   // We want to evaluate the expression from left to right as we go,
   // "1 + 1 / 2 =" should give us "1" not "1.5"

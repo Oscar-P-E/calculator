@@ -88,6 +88,17 @@ html {
 .button,
 #zero {
   border-radius: 100px;
+  transition: all 0.07s ease-out;
+}
+
+.actuate {
+  /* increase the brightness of the background color for a moment */
+  background-color: white;
+}
+
+.highlight {
+  background-color: white;
+  color: orange;
 }
 
 /*
