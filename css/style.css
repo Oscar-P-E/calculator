@@ -88,7 +88,7 @@ html {
 .button,
 #zero {
   border-radius: 100px;
-  transition: all 0.07s ease-out;
+  transition: all 0.04s ease-out;
 }
 
 .actuate {
@@ -97,6 +97,7 @@ html {
 }
 
 .highlight {
+  /* highlight continuously until removed */
   background-color: white;
   color: orange;
 }
