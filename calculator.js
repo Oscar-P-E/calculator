@@ -8,6 +8,7 @@ const addBtn = document.querySelector("#add");
 const subtractBtn = document.querySelector("#subtract");
 const multiplyBtn = document.querySelector("#multiply");
 const divideBtn = document.querySelector("#divide");
+const posNegBtn = document.querySelector("#pos-neg");
 
 let a = "";
 let b = "";
@@ -140,6 +141,7 @@ function changeRegister(event) {
 function updateDisplay(context) {
   switch (context) {
     case "hitDigit":
+    case "posNeg":
       if (register === "aRegister") {
         display.textContent = a;
         return;
@@ -239,4 +241,16 @@ function equals() {
   evaluate();
   changeRegister("equals");
   replaceMode = true;
+}
+
+posNegBtn.addEventListener("click", posNeg);
+
+function posNeg() {
+  if (register === "aRegister") {
+    a *= -1;
+    updateDisplay("posNeg");
+    return;
+  }
+  b *= -1;
+  updateDisplay("posNeg");
 }
