@@ -235,6 +235,8 @@ function multiply() {
 }
 
 function divide() {
+  a = Number(a);
+  b = Number(b);
   if (a === 0 || b === 0) {
     divZero();
     return;
