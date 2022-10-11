@@ -306,3 +306,110 @@ function zeroCheck() {
   }
   updateDisplay("hitDigit");
 }
+
+/*
+ * Accurate rounding
+ */
+var DecimalPrecision = (function () {
+  if (Number.EPSILON === undefined) {
+    Number.EPSILON = Math.pow(2, -52);
+  }
+  if (Math.trunc === undefined) {
+    Math.trunc = function (v) {
+      return v < 0 ? Math.ceil(v) : Math.floor(v);
+    };
+  }
+  var powers = [
+    1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10, 1e11, 1e12, 1e13,
+    1e14, 1e15, 1e16, 1e17, 1e18, 1e19, 1e20, 1e21, 1e22,
+  ];
+  var intpow10 = function (power) {
+    if (power < 0 || power > 22) {
+      return Math.pow(10, power);
+    }
+    return powers[power];
+  };
+  var isRound = function (num, decimalPlaces) {
+    //return decimalPlaces >= 0 &&
+    //    +num.toFixed(decimalPlaces) === num;
+    var p = intpow10(decimalPlaces);
+    return Math.round(num * p) / p === num;
+  };
+  var decimalAdjust = function (type, num, decimalPlaces) {
+    if (type !== "round" && isRound(num, decimalPlaces || 0)) return num;
+    var p = intpow10(decimalPlaces || 0);
+    var n = num * p * (1 + Number.EPSILON);
+    return Math[type](n) / p;
+  };
+  return {
+    // Decimal round (half away from zero)
+    round: function (num, decimalPlaces) {
+      return decimalAdjust("round", num, decimalPlaces);
+    },
+    // Decimal ceil
+    ceil: function (num, decimalPlaces) {
+      return decimalAdjust("ceil", num, decimalPlaces);
+    },
+    // Decimal floor
+    floor: function (num, decimalPlaces) {
+      return decimalAdjust("floor", num, decimalPlaces);
+    },
+    // Decimal trunc
+    trunc: function (num, decimalPlaces) {
+      return decimalAdjust("trunc", num, decimalPlaces);
+    },
+    // Format using fixed-point notation
+    toFixed: function (num, decimalPlaces) {
+      return decimalAdjust("round", num, decimalPlaces).toFixed(decimalPlaces);
+    },
+  };
+})();
+
+// test rounding of half
+console.log(DecimalPrecision.round(0.5) === 1); // 1
+console.log(DecimalPrecision.round(-0.5) === -1); // -1
+
+// testing very small numbers
+console.log(DecimalPrecision.ceil(1e-8, 2) === 0.01);
+console.log(DecimalPrecision.floor(1e-8, 2) === 0);
+
+// testing simple cases
+console.log(DecimalPrecision.round(5.12, 1) === 5.1);
+console.log(DecimalPrecision.round(-5.12, 1) === -5.1);
+console.log(DecimalPrecision.ceil(5.12, 1) === 5.2);
+console.log(DecimalPrecision.ceil(-5.12, 1) === -5.1);
+console.log(DecimalPrecision.floor(5.12, 1) === 5.1);
+console.log(DecimalPrecision.floor(-5.12, 1) === -5.2);
+console.log(DecimalPrecision.trunc(5.12, 1) === 5.1);
+console.log(DecimalPrecision.trunc(-5.12, 1) === -5.1);
+
+// testing edge cases for round
+console.log(DecimalPrecision.round(1.005, 2) === 1.01);
+console.log(DecimalPrecision.round(39.425, 2) === 39.43);
+console.log(DecimalPrecision.round(-1.005, 2) === -1.01);
+console.log(DecimalPrecision.round(-39.425, 2) === -39.43);
+
+// testing edge cases for ceil
+console.log(DecimalPrecision.ceil(9.13, 2) === 9.13);
+console.log(DecimalPrecision.ceil(65.18, 2) === 65.18);
+console.log(DecimalPrecision.ceil(-2.26, 2) === -2.26);
+console.log(DecimalPrecision.ceil(-18.15, 2) === -18.15);
+
+// testing edge cases for floor
+console.log(DecimalPrecision.floor(2.26, 2) === 2.26);
+console.log(DecimalPrecision.floor(18.15, 2) === 18.15);
+console.log(DecimalPrecision.floor(-9.13, 2) === -9.13);
+console.log(DecimalPrecision.floor(-65.18, 2) === -65.18);
+
+// testing edge cases for trunc
+console.log(DecimalPrecision.trunc(2.26, 2) === 2.26);
+console.log(DecimalPrecision.trunc(18.15, 2) === 18.15);
+console.log(DecimalPrecision.trunc(-2.26, 2) === -2.26);
+console.log(DecimalPrecision.trunc(-18.15, 2) === -18.15);
+
+// testing round to tens and hundreds
+console.log(DecimalPrecision.round(1262.48, -1) === 1260);
+console.log(DecimalPrecision.round(1262.48, -2) === 1300);
+
+// testing toFixed()
+console.log(DecimalPrecision.toFixed(1.005, 2) === "1.01");
