@@ -43,6 +43,22 @@ function storeDigit(e) {
       updateDisplay("hitZeroWhenZero");
       return;
     }
+    // location 1
+    // processedText = fitToMax(
+    //   Number(text),
+    //   calcMaxDecimalLength(text, maxDisplayDigits)
+    // );
+    // if (
+    //   String(Number(processedText)).replace(".", "").replace("-", "").length >
+    //   maxDisplayDigits
+    // ) {
+    //   processedText = DecimalPrecision.round(
+    //     Number(processedText),
+    //     -1
+    //   ).toExponential();
+    // a =
+    // String(fitToMax(Number(a), calcMaxDecimalLength(a, maxDisplayDigits))) +
+    // e.target.textContent;
     a += "" + e.target.textContent;
     updateDisplay("hitDigit");
     return;
@@ -368,15 +384,26 @@ function updateDisplay(context) {
       calcMaxDecimalLength(text, maxDisplayDigits)
     );
     if (
-      String(Number(processedText)).replace(".", "").replace("-", "").length >
+      String(processedText).replace(".", "").replace("-", "").length >
       maxDisplayDigits
     ) {
-      processedText = DecimalPrecision.round(
+      processedText = DecimalPrecision.floor(
         Number(processedText),
         -1
       ).toExponential();
-      // Number(processedText).toExponential();
     }
+    // console.log(
+    //   String(processedText).replace(".", "").replace("-", "").length >
+    //     maxDisplayDigits
+    // );
+    if (
+      String(processedText).replace(".", "").replace("-", "").length >
+      maxDisplayDigits + 3
+    ) {
+      processedText = "TOO HARD";
+    }
+
+    //   // Number(processedText).toExponential();
     // while (processedText % 1) {
     // processedText = processedText - (processedText % 1);
     // }
