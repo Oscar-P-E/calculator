@@ -31,8 +31,10 @@ function hitDigit(e) {
     a = "";
     replaceMode = false;
   }
-  // if (register === "aRegister" && e.target.classList.contains("zero")) return;
+  // length of "a" not including the negative symbol or the decimal point
+  // if (String(Math.abs(Number(a))).replace(".", "").length <= maxDisplayDigits) {
   storeDigit(e);
+  // }
 }
 
 function storeDigit(e) {
@@ -103,6 +105,7 @@ function updateHighlight() {
 // operatorButtons.forEach((btn) => {
 //   // btn.addEventListener("click", removeHighlight);
 //   // btn.addEventListener("click", highlight);
+// let rounded =  DecimalPrecision.round(input, maxDecimalLength);
 //   btn.addEventListener("click", toggleHighlight);
 // });
 
@@ -226,7 +229,6 @@ function clear() {
 function divZero() {
   clear();
   updateDisplay("divZero");
-  // To-do: Display "U R DRUNK"
 }
 
 let replaceMode = false;
@@ -343,15 +345,52 @@ function calcMaxDecimalLength(num, maxLength) {
 }
 
 function fitToMax(input, maxDecimalLength) {
+  // const digits = String(input).replace(".", "").length;
+  // if (digits > maxDisplayDigits) {
+  // return DecimalPrecision.trunc(input, maxDecimalLength);
+  // processedText = Number(text).toExponential();
+  // }
+  // let rounded =  DecimalPrecision.round(input, maxDecimalLength);
+  // if (String(Math.abs(rounded).replace".", "" )
   return DecimalPrecision.round(input, maxDecimalLength);
 }
 
 function updateDisplay(context) {
   function setDisplay(text) {
-    let processedText = fitToMax(
+    // const digits = String(text).replace(".", "").length;
+    let processedText;
+    // if (digits > maxDisplayDigits) {
+
+    // processedText = Number(text).toExponential();
+    // } else {
+    processedText = fitToMax(
       Number(text),
       calcMaxDecimalLength(text, maxDisplayDigits)
     );
+    if (
+      String(Number(processedText)).replace(".", "").replace("-", "").length >
+      maxDisplayDigits
+    ) {
+      processedText = DecimalPrecision.round(
+        Number(processedText),
+        -1
+      ).toExponential();
+      // Number(processedText).toExponential();
+    }
+    // while (processedText % 1) {
+    // processedText = processedText - (processedText % 1);
+    // }
+    // 99,999,999,999,999,999
+
+    // if (
+    // String(processedText).replace(".", "").replace("-", "").length >
+    // maxDisplayDigits + 2
+    // ) {
+
+    // }
+    // "-9876543.211"
+    // -9876543.211
+    // }
 
     display.textContent = processedText;
   }
@@ -385,7 +424,7 @@ function updateDisplay(context) {
     default:
       break;
   }
-  console.log(a, b, operator, register, replaceMode);
+  // console.log(a, b, operator, register, replaceMode);
 }
 
 // Display max 9 digits
