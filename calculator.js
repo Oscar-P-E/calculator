@@ -558,12 +558,12 @@ function fitToMax2(num, dec) {
   );
 }
 
-const testNumber = 999999999999999;
-const testOutput = fitToMax2(
-  testNumber,
-  calcMaxDecimalLength2(testNumber, maxDisplayDigits)
-);
-console.log(testOutput);
+// const testNumber = 999999999999999;
+// const testOutput = fitToMax2(
+// testNumber,
+// calcMaxDecimalLength2(testNumber, maxDisplayDigits)
+// );
+// console.log(testOutput);
 
 //processedText = fitToMax2(
 //Number(text),
