@@ -17,6 +17,8 @@ let b = "";
 let operator = "";
 let register = "aRegister";
 
+const maxDisplayDigits = 9;
+
 clearButton.addEventListener("click", clear);
 equalsButton.addEventListener("click", equals);
 
@@ -159,6 +161,7 @@ function updateDisplay(context) {
     case "percent":
       if (register === "aRegister") {
         if (a) display.textContent = a;
+        else display.textContent = "0";
         return;
       }
       if (b) display.textContent = b;
@@ -166,7 +169,7 @@ function updateDisplay(context) {
       break;
 
     case "evaluate":
-      display.textContent = a;
+      if (a) display.textContent = a;
       break;
 
     case "clear":
@@ -418,3 +421,8 @@ function getMaxDecimalLength(num, maxLength) {
   const nonDecimalDigits = String(Math.floor(Math.abs(Number(num)))).length;
   return maxLength - nonDecimalDigits;
 }
+
+// let fittedNumber = DecimalPrecision.round(
+//   num,
+//   getMaxDecimalLength(num, maxLength)
+// );
