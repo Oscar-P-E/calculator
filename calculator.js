@@ -342,13 +342,18 @@ function calcMaxDecimalLength(num, maxLength) {
   return maxLength - nonDecimalDigits;
 }
 
-function fitToMax(input, max) {
-  return DecimalPrecision.round(input, max);
+function fitToMax(input, maxDecimalLength) {
+  return DecimalPrecision.round(input, maxDecimalLength);
 }
 
 function updateDisplay(context) {
-  function setDisplay(output) {
-    display.textContent = String(output);
+  function setDisplay(text) {
+    let processedText = fitToMax(
+      Number(text),
+      calcMaxDecimalLength(text, maxDisplayDigits)
+    );
+
+    display.textContent = processedText;
   }
 
   switch (context) {
