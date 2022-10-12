@@ -310,7 +310,7 @@ function zeroCheck() {
 /*
  * Accurate rounding
  */
-var DecimalPrecision = (function () {
+var DecimalPrecision = (function decimalPrecision() {
   if (Number.EPSILON === undefined) {
     Number.EPSILON = Math.pow(2, -52);
   }
@@ -365,51 +365,56 @@ var DecimalPrecision = (function () {
   };
 })();
 
-// test rounding of half
-console.log(DecimalPrecision.round(0.5) === 1); // 1
-console.log(DecimalPrecision.round(-0.5) === -1); // -1
+// Display max 9 digits
+// function maxNine(n) {
+//   const abs = Number.abs(n);
+//   const maxDigits = 9;
+//   let leftDigits;
+//   let rightDigits;
+//   if (abs < 1000000000) {
+//     leftDigits = 9;
+//     // 987654321 round to no decimal places
+//   }
+//   if (abs < 100000000) {
+//     leftDigits = 8;
+//     // 98765432.1 round to 1
+//   }
+//   if (abs < 10000000) {
+//     leftDigits = 7;
+//     // 9876543.21 round to 2
+//   }
+//   if (abs < 1000000) {
+//     leftDigits = 6;
+//     // 987654.321 round to 3
+//   }
+//   if (abs < 100000) {
+//     leftDigits = 5;
+//     // 98765.4321 round to 4
+//   }
+//   if (abs < 10000) {
+//     leftDigits = 4;
+//     // 9876.54321 round to 5
+//   }
+//   if (abs < 1000) {
+//     leftDigits = 3;
+//     // 987.654321 round to 6
+//   }
+//   if (abs < 100) {
+//     leftDigits = 2;
+//     // 98.7654321 round to 7 decimal places
+//   }
+//   if (abs < 10) {
+//     leftDigits = 1;
+//     // 9.87654321 round to 8 decimal places
+//   }
 
-// testing very small numbers
-console.log(DecimalPrecision.ceil(1e-8, 2) === 0.01);
-console.log(DecimalPrecision.floor(1e-8, 2) === 0);
+//   rightDigits = maxDigits - leftDigits;
+// }
 
-// testing simple cases
-console.log(DecimalPrecision.round(5.12, 1) === 5.1);
-console.log(DecimalPrecision.round(-5.12, 1) === -5.1);
-console.log(DecimalPrecision.ceil(5.12, 1) === 5.2);
-console.log(DecimalPrecision.ceil(-5.12, 1) === -5.1);
-console.log(DecimalPrecision.floor(5.12, 1) === 5.1);
-console.log(DecimalPrecision.floor(-5.12, 1) === -5.2);
-console.log(DecimalPrecision.trunc(5.12, 1) === 5.1);
-console.log(DecimalPrecision.trunc(-5.12, 1) === -5.1);
-
-// testing edge cases for round
-console.log(DecimalPrecision.round(1.005, 2) === 1.01);
-console.log(DecimalPrecision.round(39.425, 2) === 39.43);
-console.log(DecimalPrecision.round(-1.005, 2) === -1.01);
-console.log(DecimalPrecision.round(-39.425, 2) === -39.43);
-
-// testing edge cases for ceil
-console.log(DecimalPrecision.ceil(9.13, 2) === 9.13);
-console.log(DecimalPrecision.ceil(65.18, 2) === 65.18);
-console.log(DecimalPrecision.ceil(-2.26, 2) === -2.26);
-console.log(DecimalPrecision.ceil(-18.15, 2) === -18.15);
-
-// testing edge cases for floor
-console.log(DecimalPrecision.floor(2.26, 2) === 2.26);
-console.log(DecimalPrecision.floor(18.15, 2) === 18.15);
-console.log(DecimalPrecision.floor(-9.13, 2) === -9.13);
-console.log(DecimalPrecision.floor(-65.18, 2) === -65.18);
-
-// testing edge cases for trunc
-console.log(DecimalPrecision.trunc(2.26, 2) === 2.26);
-console.log(DecimalPrecision.trunc(18.15, 2) === 18.15);
-console.log(DecimalPrecision.trunc(-2.26, 2) === -2.26);
-console.log(DecimalPrecision.trunc(-18.15, 2) === -18.15);
-
-// testing round to tens and hundreds
-console.log(DecimalPrecision.round(1262.48, -1) === 1260);
-console.log(DecimalPrecision.round(1262.48, -2) === 1300);
-
-// testing toFixed()
-console.log(DecimalPrecision.toFixed(1.005, 2) === "1.01");
+// Attempt 2
+function getMaxDecimalLength(num, maxLength) {
+  // "-987654.321"
+  // remove neg, remove decimal numbers and dot
+  const nonDecimalDigits = String(Math.floor(Math.abs(Number(num)))).length;
+  return maxLength - nonDecimalDigits;
+}
