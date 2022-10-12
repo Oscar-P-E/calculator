@@ -155,30 +155,34 @@ function changeRegister(event) {
 }
 
 function updateDisplay(context) {
+  function setDisplay(output) {
+    display.textContent = String(output);
+  }
+
   switch (context) {
     case "hitDigit":
     case "posNeg":
     case "percent":
       if (register === "aRegister") {
-        if (a) display.textContent = a;
-        else display.textContent = "0";
+        if (a) setDisplay(a);
+        // else display.textContent = "0";
         return;
       }
-      if (b) display.textContent = b;
-      else display.textContent = "0";
+      if (b) setDisplay(b);
+      // else display.textContent = "0";
       break;
 
     case "evaluate":
-      if (a) display.textContent = a;
+      if (a) setDisplay(a);
       break;
 
     case "clear":
     case "hitZeroWhenZero":
-      display.textContent = "0";
+      setDisplay("0");
       break;
 
     case "divZero":
-      display.textContent = "U R DRUNK";
+      setDisplay("U R DRUNK");
       break;
 
     default:
