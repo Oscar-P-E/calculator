@@ -154,43 +154,6 @@ function changeRegister(event) {
   }
 }
 
-function updateDisplay(context) {
-  function setDisplay(output) {
-    display.textContent = String(output);
-  }
-
-  switch (context) {
-    case "hitDigit":
-    case "posNeg":
-    case "percent":
-      if (register === "aRegister") {
-        if (a) setDisplay(a);
-        // else display.textContent = "0";
-        return;
-      }
-      if (b) setDisplay(b);
-      // else display.textContent = "0";
-      break;
-
-    case "evaluate":
-      if (a) setDisplay(a);
-      break;
-
-    case "clear":
-    case "hitZeroWhenZero":
-      setDisplay("0");
-      break;
-
-    case "divZero":
-      setDisplay("U R DRUNK");
-      break;
-
-    default:
-      break;
-  }
-  console.log(a, b, operator, register, replaceMode);
-}
-
 function evaluate() {
   // if (register === "aRegister") {
   //   a += "" + digit;
@@ -372,6 +335,54 @@ var DecimalPrecision = (function decimalPrecision() {
   };
 })();
 
+function calcMaxDecimalLength(num, maxLength) {
+  // "-987654.321"
+  // remove neg, remove decimal numbers and dot
+  const nonDecimalDigits = String(Math.floor(Math.abs(Number(num)))).length;
+  return maxLength - nonDecimalDigits;
+}
+
+function fitToMax(input, max) {
+  return DecimalPrecision.round(input, max);
+}
+
+function updateDisplay(context) {
+  function setDisplay(output) {
+    display.textContent = String(output);
+  }
+
+  switch (context) {
+    case "hitDigit":
+    case "posNeg":
+    case "percent":
+      if (register === "aRegister") {
+        if (a) setDisplay(a);
+        // else display.textContent = "0";
+        return;
+      }
+      if (b) setDisplay(b);
+      // else display.textContent = "0";
+      break;
+
+    case "evaluate":
+      if (a) setDisplay(a);
+      break;
+
+    case "clear":
+    case "hitZeroWhenZero":
+      setDisplay("0");
+      break;
+
+    case "divZero":
+      setDisplay("U R DRUNK");
+      break;
+
+    default:
+      break;
+  }
+  console.log(a, b, operator, register, replaceMode);
+}
+
 // Display max 9 digits
 // function maxNine(n) {
 //   const abs = Number.abs(n);
@@ -417,16 +428,3 @@ var DecimalPrecision = (function decimalPrecision() {
 
 //   rightDigits = maxDigits - leftDigits;
 // }
-
-// Attempt 2
-function getMaxDecimalLength(num, maxLength) {
-  // "-987654.321"
-  // remove neg, remove decimal numbers and dot
-  const nonDecimalDigits = String(Math.floor(Math.abs(Number(num)))).length;
-  return maxLength - nonDecimalDigits;
-}
-
-// let fittedNumber = DecimalPrecision.round(
-//   num,
-//   getMaxDecimalLength(num, maxLength)
-// );
