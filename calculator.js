@@ -420,7 +420,18 @@ function updateDisplay(context) {
     // );
     if (
       String(processedText).replace(".", "").replace("-", "").length >
-      maxDisplayDigits + 3
+      maxDisplayDigits
+    ) {
+      // placeholder 3
+      processedText = fitToMax2(
+        Number(text),
+        calcMaxDecimalLength2(text, maxDisplayDigits)
+      );
+    }
+    if (
+      String(processedText).replace(".", "").replace("-", "").length >
+        maxDisplayDigits + 3 ||
+      isNaN(processedText)
     ) {
       processedText = "TOO HARD";
     }
@@ -506,6 +517,22 @@ function updateDisplay(context) {
 //     leftDigits = 4;
 //     // 9876.54321 round to 5
 //   }
+function fitToMax2(input, maxDecimalLength) {
+  // const digits = String(input).replace(".", "").length;
+  // if (digits > maxDisplayDigits) {
+  // return DecimalPrecision.trunc(input, maxDecimalLength);
+  // processedText = Number(text).toExponential();
+  // }
+  // let rounded =  DecimalPrecision.round(input, maxDecimalLength);
+  // if (String(Math.abs(rounded).replace".", "" )
+  return (
+    Math.round(parseFloat(sv + "e" + maxDecimalLength)) +
+    e -
+    " + maxDecimalLength" +
+    "e" +
+    (ev || 0)(input, maxDecimalLength)
+  );
+}
 //   if (abs < 1000) {
 //     leftDigits = 3;
 //     // 987.654321 round to 6
@@ -521,3 +548,33 @@ function updateDisplay(context) {
 
 //   rightDigits = maxDigits - leftDigits;
 // }
+
+function fitToMax2(num, dec) {
+  const [sv, ev] = num.toString().split("e");
+  return Number(
+    Number(Math.round(parseFloat(sv + "e" + dec)) + "e-" + dec) +
+      "e" +
+      (ev || 0)
+  );
+}
+
+const testNumber = 999999999999999;
+const testOutput = fitToMax2(
+  testNumber,
+  calcMaxDecimalLength2(testNumber, maxDisplayDigits)
+);
+console.log(testOutput);
+
+//processedText = fitToMax2(
+//Number(text),
+//calcMaxDecimalLength(text, maxDisplayDigits)
+//);
+
+function calcMaxDecimalLength2(num, maxLength) {
+  const nonDecimalDigits = String(Math.floor(Math.abs(Number(num)))).length;
+  if (nonDecimalDigits < maxLength) {
+    return maxLength - nonDecimalDigits;
+  } else {
+    return maxLength;
+  }
+}
