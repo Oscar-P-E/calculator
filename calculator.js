@@ -11,6 +11,7 @@ const divideBtn = document.querySelector("#divide");
 const posNegBtn = document.querySelector("#pos-neg");
 const percentBtn = document.querySelector("#percent");
 const zeroBtn = document.querySelector("#zero");
+const decimalBtn = document.querySelector("#decimal");
 
 let a = "";
 let b = "";
@@ -43,7 +44,6 @@ function storeDigit(e) {
       updateDisplay("hitZeroWhenZero");
       return;
     }
-    // location 1
     // processedText = fitToMax(
     //   Number(text),
     //   calcMaxDecimalLength(text, maxDisplayDigits)
@@ -293,6 +293,28 @@ function zeroCheck() {
     b += "" + "0";
   }
   updateDisplay("hitDigit");
+}
+
+decimalBtn.addEventListener("click", storeDecimal);
+
+function storeDecimal() {
+  // placeholder 2
+  if (register === "aRegister") {
+    if (!a) {
+      a = "0";
+    }
+    if (!a.match(/\./g)) {
+      a += "" + ".";
+    }
+  } else {
+    // register === "bRegister"
+    if (!b) {
+      b = "0";
+    }
+    if (!b.match(/\./g)) {
+      b += "" + ".";
+    }
+  }
 }
 
 /*
