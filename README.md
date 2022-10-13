@@ -2,4 +2,6 @@
 
 An on-screen calculator using JavaScript, HTML, and CSS.
 
-Be careful - if the numbers get too big, things could get... serious.
+Are you dumb enough to divide by zero?
+
+Also, be careful - if the numbers get too big, things could get... serious.
