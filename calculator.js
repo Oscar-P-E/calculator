@@ -399,7 +399,6 @@ function updateDisplay(context) {
     if (isNaN(processedText)) {
       processedText = "TOO HARD";
     }
-    console.log(String(processedText).length);
     if (String(processedText).length > maxDisplayDigits) {
       display.classList.add("small-text");
       html.classList.add("danger-1");
