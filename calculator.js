@@ -475,7 +475,9 @@ function updateDisplay(context) {
     }
     if (
       register === "aRegister" &&
-      String(processedText).length < maxDisplayDigits + 1
+      String(processedText).length < maxDisplayDigits + 1 &&
+      String(processedText) !== "Infinity" &&
+      String(processedText) !== "-Infinity"
     ) {
       display.classList.remove("display-danger-text");
       html.classList.remove("danger-1", "danger-2");
