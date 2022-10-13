@@ -399,6 +399,10 @@ function updateDisplay(context) {
   function setDisplay(text) {
     // const digits = String(text).replace(".", "").length;
     let processedText;
+    if (text === "U R DRUNK") {
+      display.textContent = "U R DRUNK";
+      return;
+    }
     if (
       display.classList.contains("small-text", "smaller-text", "smallest-text")
     ) {
