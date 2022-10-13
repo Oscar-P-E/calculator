@@ -3,7 +3,6 @@
 }
 
 html {
-  /* box-sizing: border-box; */
   font-size: 62.5%; /* 10pt, for easy rem sizing */
   font-family: Arial, Helvetica, sans-serif;
   background-color: lightblue;
@@ -133,34 +132,3 @@ html {
 .display-danger-text {
   color: hsl(0, 84%, 31%);
 }
-/*
- * Funky Buttons:
- */
-
-/* .button { */
-/*   border-radius: 90px 80px 85px 100px; */
-/* } */
-/* .one, */
-/* .five, */
-/* .nine, */
-/* .divide { */
-/*   border-radius: 105% 90px 80px 85px; */
-/* } */
-
-/* .two, */
-/* .four, */
-/* .eight, */
-/* .pos-neg { */
-/*   border-radius: 95% / 100px 108% 85%; */
-/* } */
-
-/* .three, */
-/* .seven, */
-/* .plus, */
-/* .multiply { */
-/*   border-radius: 97px 83px 100px 102px; */
-/* } */
-
-/* #zero { */
-/*   border-radius: 90px 70% / 90px 90%; */
-/* } */
