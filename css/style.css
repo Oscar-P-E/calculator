@@ -49,7 +49,11 @@ html {
 }
 
 .display {
+  display: flex;
+  justify-content: end;
+  align-items: end;
   font-size: 6.4rem;
+  height: 6.4rem;
   text-align: right;
   padding-right: 31px;
   margin-bottom: 20px;
@@ -100,6 +104,18 @@ html {
   /* highlight continuously until removed */
   background-color: white;
   color: orange;
+}
+
+.small-text {
+  font-size: 5rem;
+}
+
+.smaller-text {
+  font-size: 3.8rem;
+}
+
+.smallest-text {
+  font-size: 3rem;
 }
 
 /*
