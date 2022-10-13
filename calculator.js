@@ -34,10 +34,7 @@ function hitDigit(e) {
     a = "";
     replaceMode = false;
   }
-  // length of "a" not including the negative symbol or the decimal point
-  // if (String(Math.abs(Number(a))).replace(".", "").length <= maxDisplayDigits) {
   storeDigit(e);
-  // }
 }
 
 function storeDigit(e) {
@@ -46,21 +43,6 @@ function storeDigit(e) {
       updateDisplay("hitZeroWhenZero");
       return;
     }
-    // processedText = fitToMax(
-    //   Number(text),
-    //   calcMaxDecimalLength(text, maxDisplayDigits)
-    // );
-    // if (
-    //   String(Number(processedText)).replace(".", "").replace("-", "").length >
-    //   maxDisplayDigits
-    // ) {
-    //   processedText = DecimalPrecision.round(
-    //     Number(processedText),
-    //     -1
-    //   ).toExponential();
-    // a =
-    // String(fitToMax(Number(a), calcMaxDecimalLength(a, maxDisplayDigits))) +
-    // e.target.textContent;
     a += "" + e.target.textContent;
     updateDisplay("hitDigit");
     return;
@@ -74,9 +56,6 @@ function storeDigit(e) {
 }
 
 buttons.forEach((btn) => {
-  // if (btn.classList.contains("z-span")) {
-  // return;
-  // }
   btn.addEventListener("click", actuate);
   btn.addEventListener("transitionend", removeActuate);
 });
@@ -118,36 +97,13 @@ function updateHighlight() {
   }
 }
 
-// document.addEventListener()
-
-// operatorButtons.forEach((btn) => {
-//   // btn.addEventListener("click", removeHighlight);
-//   // btn.addEventListener("click", highlight);
-// let rounded =  DecimalPrecision.round(input, maxDecimalLength);
-//   btn.addEventListener("click", toggleHighlight);
-// });
-
-// function toggleHighlight(e) {
-//   e.target.classList.toggle("highlight");
-// }
-
-// function removeHighlight(e) {
-// if (e.target.classList.contains("highlight")) return 0;
-// e.target.classList.remove("highlight");
-// }
-
-// function highlight(e) {
-// if (e.target.classList.contains("highlight")) return 0;
-// e.target.classList.add("highlight");
-// }
-
 operatorButtons.forEach((btn) => {
   btn.addEventListener("click", hitOperator);
 });
 
 function hitOperator(e) {
   replaceMode = false;
-  // We want to evaluate the expression from left to right as we go,
+  // We want to evaluate the expression from left to right in pairs as we go
   // "1 + 1 / 2 =" should give us "1" not "1.5"
   if (operator && b) {
     evaluate();
@@ -176,13 +132,6 @@ function changeRegister(event) {
 }
 
 function evaluate() {
-  // if (register === "aRegister") {
-  //   a += "" + digit;
-  //   updateDisplay("hitDigit");
-  //   return;
-  // }
-  // b += "" + digit;
-  // updateDisplay("hitDigit");
   if (!a) {
     a = 0;
   }
@@ -300,7 +249,6 @@ function zeroCheck() {
 decimalBtn.addEventListener("click", storeDecimal);
 
 function storeDecimal() {
-  // placeholder 2
   if (register === "aRegister") {
     if (!a) {
       a = "0";
@@ -385,19 +333,11 @@ function calcMaxDecimalLength(num, maxLength) {
 }
 
 function fitToMax(input, maxDecimalLength) {
-  // const digits = String(input).replace(".", "").length;
-  // if (digits > maxDisplayDigits) {
-  // return DecimalPrecision.trunc(input, maxDecimalLength);
-  // processedText = Number(text).toExponential();
-  // }
-  // let rounded =  DecimalPrecision.round(input, maxDecimalLength);
-  // if (String(Math.abs(rounded).replace".", "" )
   return DecimalPrecision.round(input, maxDecimalLength);
 }
 
 function updateDisplay(context) {
   function setDisplay(text) {
-    // const digits = String(text).replace(".", "").length;
     let processedText;
     if (text === "U R DRUNK") {
       display.textContent = "U R DRUNK";
@@ -410,10 +350,9 @@ function updateDisplay(context) {
       display.classList.remove("smaller-text");
       display.classList.remove("smallest-text");
     }
-    // if (digits > maxDisplayDigits) {
-
-    // processedText = Number(text).toExponential();
-    // } else {
+    /*
+     * Accurate rounding - gets most of the job done
+     */
     processedText = fitToMax(
       Number(text),
       calcMaxDecimalLength(text, maxDisplayDigits)
@@ -422,30 +361,22 @@ function updateDisplay(context) {
       String(processedText).replace(".", "").replace("-", "").length >
       maxDisplayDigits
     ) {
+      /*
+       * Rough rounding, to differently round the values that the above gets wrong
+       */
       processedText = DecimalPrecision.floor(
         Number(processedText),
         -1
       ).toExponential();
     }
-    // console.log(
-    //   String(processedText).replace(".", "").replace("-", "").length >
-    //     maxDisplayDigits
-    // );
-    // if (
-    //   String(processedText).replace(".", "").replace("-", "").length >
-    //   maxDisplayDigits + 4
-    // ) {
-    //   // placeholder 3
-    //   processedText = fitToMax2(
-    //     Number(text),
-    //     calcMaxDecimalLength2(text, maxDisplayDigits)
-    //   );
-    // }
     if (
       String(processedText).replace(".", "").replace("-", "").length >
         maxDisplayDigits + 4 ||
       isNaN(processedText)
     ) {
+      /*
+       * Now we start to use exponent form, using crude rounding because accuracy is low at this stage
+       */
       processedText = Math.round(Number(processedText)).toExponential();
     }
     if (
@@ -453,11 +384,18 @@ function updateDisplay(context) {
         maxDisplayDigits + 4 ||
       isNaN(processedText)
     ) {
+      /*
+       * To be honest I'm just trying to catch as many crazy edge cases as I can here.
+       * I should have just used .split .slice .join and been done with it a long time ago
+       */
       processedText = DecimalPrecision.floor(
         Number(processedText),
         -1
       ).toExponential();
     }
+    /*
+     * Now we stylishly give up. Alternatively we could google some library that gracefully handles big floats
+     */
     if (isNaN(processedText)) {
       processedText = "TOO HARD";
     }
@@ -489,22 +427,6 @@ function updateDisplay(context) {
         btn.classList.remove("danger-2", "danger-text");
       });
     }
-    //   // Number(processedText).toExponential();
-    // while (processedText % 1) {
-    // processedText = processedText - (processedText % 1);
-    // }
-    // 99,999,999,999,999,999
-
-    // if (
-    // String(processedText).replace(".", "").replace("-", "").length >
-    // maxDisplayDigits + 2
-    // ) {
-
-    // }
-    // "-9876543.211"
-    // -9876543.211
-    // }
-
     display.textContent = processedText;
   }
 
@@ -514,11 +436,9 @@ function updateDisplay(context) {
     case "percent":
       if (register === "aRegister") {
         if (a) setDisplay(a);
-        // else display.textContent = "0";
         return;
       }
       if (b) setDisplay(b);
-      // else display.textContent = "0";
       break;
 
     case "evaluate":
@@ -537,70 +457,7 @@ function updateDisplay(context) {
     default:
       break;
   }
-  // console.log(a, b, operator, register, replaceMode);
 }
-
-// Display max 9 digits
-// function maxNine(n) {
-//   const abs = Number.abs(n);
-//   const maxDigits = 9;
-//   let leftDigits;
-//   let rightDigits;
-//   if (abs < 1000000000) {
-//     leftDigits = 9;
-//     // 987654321 round to no decimal places
-//   }
-//   if (abs < 100000000) {
-//     leftDigits = 8;
-//     // 98765432.1 round to 1
-//   }
-//   if (abs < 10000000) {
-//     leftDigits = 7;
-//     // 9876543.21 round to 2
-//   }
-//   if (abs < 1000000) {
-//     leftDigits = 6;
-//     // 987654.321 round to 3
-//   }
-//   if (abs < 100000) {
-//     leftDigits = 5;
-//     // 98765.4321 round to 4
-//   }
-//   if (abs < 10000) {
-//     leftDigits = 4;
-//     // 9876.54321 round to 5
-//   }
-function fitToMax2(input, maxDecimalLength) {
-  // const digits = String(input).replace(".", "").length;
-  // if (digits > maxDisplayDigits) {
-  // return DecimalPrecision.trunc(input, maxDecimalLength);
-  // processedText = Number(text).toExponential();
-  // }
-  // let rounded =  DecimalPrecision.round(input, maxDecimalLength);
-  // if (String(Math.abs(rounded).replace".", "" )
-  return (
-    Math.round(parseFloat(sv + "e" + maxDecimalLength)) +
-    e -
-    " + maxDecimalLength" +
-    "e" +
-    (ev || 0)(input, maxDecimalLength)
-  );
-}
-//   if (abs < 1000) {
-//     leftDigits = 3;
-//     // 987.654321 round to 6
-//   }
-//   if (abs < 100) {
-//     leftDigits = 2;
-//     // 98.7654321 round to 7 decimal places
-//   }
-//   if (abs < 10) {
-//     leftDigits = 1;
-//     // 9.87654321 round to 8 decimal places
-//   }
-
-//   rightDigits = maxDigits - leftDigits;
-// }
 
 function fitToMax2(num, dec) {
   const [sv, ev] = num.toString().split("e");
@@ -610,18 +467,6 @@ function fitToMax2(num, dec) {
       (ev || 0)
   );
 }
-
-// const testNumber = 999999999999999;
-// const testOutput = fitToMax2(
-// testNumber,
-// calcMaxDecimalLength2(testNumber, maxDisplayDigits)
-// );
-// console.log(testOutput);
-
-//processedText = fitToMax2(
-//Number(text),
-//calcMaxDecimalLength(text, maxDisplayDigits)
-//);
 
 function calcMaxDecimalLength2(num, maxLength) {
   const nonDecimalDigits = String(Math.floor(Math.abs(Number(num)))).length;
