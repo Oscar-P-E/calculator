@@ -1,3 +1,5 @@
+const html = document.querySelector("html");
+const calculator = document.querySelector(".calculator");
 const buttons = document.querySelectorAll(".button");
 const numberButtons = document.querySelectorAll(".button.number");
 const operatorButtons = document.querySelectorAll(".button.operator");
@@ -458,12 +460,28 @@ function updateDisplay(context) {
     console.log(String(processedText).length);
     if (String(processedText).length > maxDisplayDigits) {
       display.classList.add("small-text");
+      html.classList.add("danger-1");
     }
     if (String(processedText).length > maxDisplayDigits + 6) {
       display.classList.add("smaller-text");
+      html.classList.add("danger-2");
+      buttons.forEach((btn) => {
+        btn.classList.add("danger-2", "danger-text");
+      });
+      display.classList.add("display-danger-text");
     }
     if (String(processedText).length > maxDisplayDigits + 10) {
       display.classList.add("smallest-text");
+    }
+    if (
+      register === "aRegister" &&
+      String(processedText).length < maxDisplayDigits + 1
+    ) {
+      display.classList.remove("display-danger-text");
+      html.classList.remove("danger-1", "danger-2");
+      buttons.forEach((btn) => {
+        btn.classList.remove("danger-2", "danger-text");
+      });
     }
     //   // Number(processedText).toExponential();
     // while (processedText % 1) {

@@ -118,6 +118,21 @@ html {
   font-size: 3rem;
 }
 
+.danger-1 {
+  background-color: grey;
+}
+
+.danger-2 {
+  background-color: darkred;
+}
+
+.danger-text {
+  color: black;
+}
+
+.display-danger-text {
+  color: hsl(0, 84%, 31%);
+}
 /*
  * Funky Buttons:
  */
