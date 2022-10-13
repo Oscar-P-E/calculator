@@ -397,6 +397,13 @@ function updateDisplay(context) {
   function setDisplay(text) {
     // const digits = String(text).replace(".", "").length;
     let processedText;
+    if (
+      display.classList.contains("small-text", "smaller-text", "smallest-text")
+    ) {
+      display.classList.remove("small-text");
+      display.classList.remove("smaller-text");
+      display.classList.remove("smallest-text");
+    }
     // if (digits > maxDisplayDigits) {
 
     // processedText = Number(text).toExponential();
@@ -418,24 +425,46 @@ function updateDisplay(context) {
     //   String(processedText).replace(".", "").replace("-", "").length >
     //     maxDisplayDigits
     // );
+    // if (
+    //   String(processedText).replace(".", "").replace("-", "").length >
+    //   maxDisplayDigits + 4
+    // ) {
+    //   // placeholder 3
+    //   processedText = fitToMax2(
+    //     Number(text),
+    //     calcMaxDecimalLength2(text, maxDisplayDigits)
+    //   );
+    // }
     if (
       String(processedText).replace(".", "").replace("-", "").length >
-      maxDisplayDigits
-    ) {
-      // placeholder 3
-      processedText = fitToMax2(
-        Number(text),
-        calcMaxDecimalLength2(text, maxDisplayDigits)
-      );
-    }
-    if (
-      String(processedText).replace(".", "").replace("-", "").length >
-        maxDisplayDigits + 3 ||
+        maxDisplayDigits + 4 ||
       isNaN(processedText)
     ) {
+      processedText = Math.round(Number(processedText)).toExponential();
+    }
+    if (
+      String(processedText).replace(".", "").replace("-", "").length >
+        maxDisplayDigits + 4 ||
+      isNaN(processedText)
+    ) {
+      processedText = DecimalPrecision.floor(
+        Number(processedText),
+        -1
+      ).toExponential();
+    }
+    if (isNaN(processedText)) {
       processedText = "TOO HARD";
     }
-
+    console.log(String(processedText).length);
+    if (String(processedText).length > maxDisplayDigits) {
+      display.classList.add("small-text");
+    }
+    if (String(processedText).length > maxDisplayDigits + 6) {
+      display.classList.add("smaller-text");
+    }
+    if (String(processedText).length > maxDisplayDigits + 10) {
+      display.classList.add("smallest-text");
+    }
     //   // Number(processedText).toExponential();
     // while (processedText % 1) {
     // processedText = processedText - (processedText % 1);
